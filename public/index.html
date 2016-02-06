@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"
+	  ng-app="schedulerApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Scheduler</title>
+	<script type="text/javascript" src="libs/angular/angular.js"></script>
+	<script type="text/javascript" src="libs/angular-ui-router/release/angular-ui-router.js"></script>
+	<script type="text/javascript" src="libs/angular-local-storage/dist/angular-local-storage.js"></script>
+
+	<script type="text/javascript" src="components/schedulerApp.module.js"></script>
+	<script type="text/javascript" src="components/schedulerApp.config.js"></script>
+
+	<script type="text/javascript" src="components/event/event.service.js"></script>
+
+	<!--<script type="text/javascript" src="components/country-catalog/countryCatalogService.js"></script>-->
+	<!--<script type="text/javascript" src="components/country-catalog/CountryCatalogController.js"></script>-->
+	<!--<script type="text/javascript" src="components/country-catalog/cityCatalogController.js"></script>-->
+
+</head>
+<body>
+
+<ul>
+	<li>
+		<a href="#/country-catalog">
+			Countries
+		</a>
+	</li>
+	<li>
+		<a href="#/language-catalog">
+			Languages
+		</a>
+	</li>
+	<li>
+		<a href="#/wrong">
+			wrong
+		</a>
+		<span>(will be redirected to main)</span>
+	</li>
+</ul>
+
+<div ui-view></div>
+
+</body>
+</html>
