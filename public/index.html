@@ -10,36 +10,36 @@
     <script type="text/javascript" src="libs/angular/angular.js"></script>
     <script type="text/javascript" src="libs/angular-ui-router/release/angular-ui-router.js"></script>
     <script type="text/javascript" src="libs/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script type="text/javascript" src="libs/angular-modal/modal.js"></script>
 
     <script type="text/javascript" src="components/schedulerApp.module.js"></script>
+    <script type="text/javascript" src="components/constants.js"></script>
     <script type="text/javascript" src="components/schedulerApp.config.js"></script>
 
     <script type="text/javascript" src="components/event/event.service.js"></script>
+    <script type="text/javascript" src="components/event/event.controller.js"></script>
+    <script type="text/javascript" src="components/event/event.directive.js"></script>
 
+    <script type="text/javascript" src="components/event/eventModal.controller.js"></script>
+
+    <script type="text/javascript" src="components/pagination/pagination.controller.js"></script>
+    <script type="text/javascript" src="components/pagination/pagination.directive.js"></script>
+
+    <script type="text/javascript" src="components/day/day.service.js"></script>
+    <script type="text/javascript" src="components/day/day.controller.js"></script>
+    <script type="text/javascript" src="components/day/day.directive.js"></script>
+
+    <script type="text/javascript" src="components/week/week.service.js"></script>
+    <script type="text/javascript" src="components/week/week.controller.js"></script>
+    <script type="text/javascript" src="components/week/week.directive.js"></script>
+
+    <script type="text/javascript" src="components/calendar/calendar.service.js"></script>
+    <script type="text/javascript" src="components/calendar/calendar.directive.js"></script>
 
 </head>
 <body>
 
-<ul>
-    <li>
-        <a href="#/country-catalog">
-            Countries
-        </a>
-    </li>
-    <li>
-        <a href="#/language-catalog">
-            Languages
-        </a>
-    </li>
-    <li>
-        <a href="#/wrong">
-            wrong
-        </a>
-        <span>(will be redirected to main)</span>
-    </li>
-</ul>
-
-<div ui-view></div>
+<calendar></calendar>
 
 </body>
 </html>

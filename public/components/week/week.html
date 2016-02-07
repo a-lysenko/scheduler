@@ -1,0 +1,13 @@
+<div class="week">
+    <div class="week__hour-ruler">
+        <div class="day day__ruler">
+            <div ng-repeat="hourValue in vm.formattedHoursGrid"
+                 class="week__hour-ruler-item"
+                 ng-style="{height: vm.blockHeight+ 'px', 'line-height': vm.blockHeight+ 'px'}">
+                {{hourValue}}
+            </div>
+        </div>
+    </div>
+
+    <day ng-repeat="day in vm.grid" day="day"></day>
+</div>

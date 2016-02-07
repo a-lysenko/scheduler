@@ -1,0 +1,12 @@
+<div class="day-wrapper">
+    <header class="day__header"
+            ng-class="{day_current: vm.isCurrentDate()}">
+        {{vm.day.start | date:'d MMMM / EEE'}}
+    </header>
+    <div class="day"
+         ng-class="{day_current: vm.isCurrentDate()}"
+         ng-style="{height: vm.blockHeight + 'px'}"
+         ng-click="vm.showEventModal()">
+        <event ng-repeat="event in vm.day.events" event="event" show-event-modal="vm.showEventModal"></event>
+    </div>
+</div>

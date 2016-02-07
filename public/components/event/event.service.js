@@ -1,73 +1,117 @@
 (function () {
     angular
         .module('schedulerApp')
-        .factory(function (localStorageService) {
-            var eventsKey = 'events';
-            // event:
-            // {
-            //      dateFrom,
-            //      dateTo,
-            //      desc
-            // }
+        .factory('eventService', eventService);
 
-            return {
-                getAllEvents: getAllEvents,
-                getWeekEvents: getWeekEvents,
-                getDayEvents: getDayEvents,
-                setEvent: setEvent,
+    function eventService(localStorageService, btfModal, $q) {
+        var eventsKey = 'events';
+        // event:
+        // {
+        //      start,
+        //      end,
+        //      name
+        //      desc,
+        //      id
+        // }
 
-                getWeekIntervalWith: getWeekIntervalWith
+        return {
+            getAllEvents: getAllEvents,
+            getEventsIn: getEventsIn,
+            setEvent: setEvent,
+            removeEvent: removeEvent,
+            excludeEventFromSet: excludeEventFromSet,
+            getEventDurationHrs: getEventDurationHrs,
+            getEventStartHrs: getEventStartHrs,
+
+            showEventModal: showEventModal
+        };
+
+        function getAllEvents() {
+            var events = localStorageService.get(eventsKey) || [];
+            events.forEach(function (event) {
+                event.start = new Date(event.start);
+                event.end = new Date(event.end);
+            });
+
+            return events;
+        }
+
+        function getEventsIn(interval) {
+            var events = getAllEvents();
+
+            return events.filter(function (event) {
+                return event.start >= interval.start &&
+                    event.end <= interval.end;
+            });
+        }
+
+        function setEvent(event) {
+            var events = getAllEvents();
+            if (event.id) {
+                events = excludeEventFromSet(events, event.id);
+            } else {
+                event.id = 'event_' + Date.now() + '_' + getRandom();
+            }
+            events.push(event);
+            return localStorageService.set(eventsKey, events);
+        }
+
+        function removeEvent(id) {
+            var updatedEventSet = excludeEventFromSet(getAllEvents(), id);
+            return localStorageService.set(eventsKey, updatedEventSet);
+        }
+
+        function excludeEventFromSet(eventSet, idToExclude) {
+            return eventSet
+                .filter(function (event) {
+                    return event.id !== idToExclude;
+                });
+        }
+
+        function getEventDurationHrs(event) {
+            var MINUTES_IN_HOUR = 60;
+            return event.end.getHours() - event.start.getHours() +
+                (event.end.getMinutes() - event.start.getMinutes()) / MINUTES_IN_HOUR;
+        }
+
+        function getEventStartHrs(event) {
+            var MINUTES_IN_HOUR = 60;
+            return event.start.getHours() + event.start.getMinutes() / MINUTES_IN_HOUR;
+        }
+
+        function showEventModal(options) {
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+
+            options.confirm = function (result) {
+                deferred.resolve(result);
             };
 
-            function getAllEvents() {
-                return localStorageService.get(eventsKey) || [];
-            }
+            options.decline = function (result) {
+                deferred.reject(result);
+            };
 
-            function getWeekEvents(date) {
-                var events = getAllEvents();
-                var weekInterval = getWeekIntervalWith(date);
+            var eventModal = btfModal({
+                templateUrl: 'components/event/eventModal.html',
+                controller: 'EventModalController',
+                controllerAs: 'vm'
+            });
 
-                return events.filter(function (event) {
-                    return event.dateFrom >= weekInterval.startDate &&
-                            event.dateTo <= weekInterval.endDate;
-                });
-            }
+            eventModal.activate({
+                options: options
+            });
 
-            function getDayEvents(date) {
-                var events = getAllEvents();
+            promise.finally(eventModal.deactivate);
 
-                var startOfDate = getStartOf(date);
-                var endOfDate = getEndOf(date);
+            return promise;
+        }
 
-                return events.filter(function (event) {
-                    return event.dateFrom >= startOfDate &&
-                        event.dateTo <= endOfDate;
-                });
-            }
-
-            function setEvent(event) {
-                var events = getAllEvents();
-                events.push(event);
-                return localStorageService.set(eventsKey, events);
-            }
-
-            function getWeekIntervalWith(dateInWeek) {
-                var weekStartDate = getStartOf(dateInWeek);
-                weekStartDate.setDate(weekStartDate.getDate()-weekStartDate.getDay() + 1);
-
-                return {
-                    startDate: weekStartDate,
-                    endDate: new Date(+weekStartDate + 7*24*3600*1000 -1)
-                }
-            }
-
-            function getStartOf(date) {
-                return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-            }
-
-            function getEndOf(date) {
-                return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59, 999);
-            }
-
-        })
+        function getRandom() {
+            var min = 0,
+                max = 1000;
+            var rand = min - 0.5 + Math.random() * (max - min + 1);
+            rand = Math.round(rand);
+            return rand;
+        }
+    }
 })();

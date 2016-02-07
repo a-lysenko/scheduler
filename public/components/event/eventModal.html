@@ -1,0 +1,36 @@
+
+<div class="event-modal-wrapper">
+    <div class="event-modal">
+        <h3 class="event-modal_title">Add event ({{vm.date | date: 'dd MMMM / EEE'}})</h3>
+        <div class="event-modal__time-wrapper">
+            <input name="start"
+                   type="time"
+                   class="event-modal__time mod-left mod-border"
+                   ng-model="vm.event.start"/>
+            <input name="end"
+                   type="time"
+                   class="event-modal__time mod-right mod-border "
+                   ng-model="vm.event.end"/>
+        </div>
+
+        <input name="name"
+               type="text"
+               class="event-modal__name mod-border"
+               placeholder="event name"
+               ng-model="vm.event.name"/>
+        <textarea name="description" id="description" rows="5"
+              class="event-modal__description mod-border"
+              placeholder="event description"
+              ng-model="vm.event.description"></textarea>
+
+        <div class="event-modal__control-panel">
+            <button class="mod-button mod-left"
+                    ng-if="vm.event.id"
+                    ng-click="vm.remove()">Delete</button>
+            <button class="mod-button event-modal_button mod-right"
+                    ng-click="vm.cancel()">Cancel</button>
+            <button class="mod-button event-modal_button mod-right"
+                    ng-click="vm.save()">Save</button>
+        </div>
+    </div>
+</div>

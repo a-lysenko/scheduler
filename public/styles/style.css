@@ -1,11 +1,231 @@
-/*@font-face {
-    font-family: 'bad_scriptregular';
-    src: url('../fonts/badscript-regular-webfont.eot');
-    src: url('../fonts/badscript-regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/badscript-regular-webfont.woff2') format('woff2'),
-         url('../fonts/badscript-regular-webfont.woff') format('woff'),
-         url('../fonts/badscript-regular-webfont.ttf') format('truetype'),
-         url('../fonts/badscript-regular-webfont.svg#bad_scriptregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}*/
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    min-height: 100%;
+}
+
+.mod-left {
+    float: left;
+}
+
+.mod-right {
+    float: right;
+}
+
+.mod-border {
+    border: 1px solid black;
+}
+
+.mod-title {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.mod-button {
+    width: 100px;
+    height: 25px;
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 0;
+    box-shadow: 2px 2px #333;
+}
+
+.mod-button:hover {
+    background-color: #ccc;
+}
+
+.mod-button:active {
+    box-shadow: inset 1px 1px #666;
+}
+
+.calendar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 840px;
+    min-height: 300px;
+    margin: auto;
+    border: 2px solid black;
+    border-radius: 4px;
+    box-shadow: 2px 2px 5px -1px #333;
+}
+
+.pagination {
+    display: block;
+    overflow: hidden;
+    padding: 15px;
+    border-bottom: 1px solid black;
+    box-sizing: border-box;
+}
+
+.week {
+    display: inline-block;
+}
+
+.week__hour-ruler {
+    float: left;
+    margin-left: -50px;
+    padding-top: 18px;
+}
+
+.week__hour-ruler-item {
+    box-sizing: border-box;
+    border-top: 1px dashed #333;
+    text-align: right;
+}
+
+.day-wrapper {
+    position: relative;
+    float: left;
+    overflow: hidden;
+    width: 120px;
+    text-align: center;
+}
+
+.day {
+    display: block;
+    position: relative;
+    box-sizing: content-box;
+    margin: 0 2px;
+    padding: 8px 0 0 0;
+    border: 1px solid black;
+    border-top-width: 2px;
+
+    cursor: pointer;
+}
+
+.day__ruler {
+    padding-top: 10px;
+    border-width: 0;
+
+    cursor: default;
+}
+
+.day_current {
+    border-color: #cc0000;
+    color: #cc0000
+}
+
+.day__header {
+    position: relative;
+    top: 7px;
+
+    display: inline;
+    height: 12px;
+
+    margin: 10px 0 -3px 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    background-color: white;
+    vertical-align: middle;
+    text-align: center;
+    z-index: 999;
+}
+
+.event {
+    position: absolute;
+    display: block;
+    width: 90%;
+    margin: 8px auto 0;
+    border: 1px solid black;
+    padding: 5px;
+    box-sizing: border-box;
+    background-color: #eeeeee;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    text-align: left;
+    color: black;
+}
+
+.event-modal-wrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+}
+
+.event-modal-wrapper_confirm {
+    z-index: 1010;
+}
+
+.event-modal {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 15px 40px 15px 30px;
+    width: 400px;
+    height: 300px;
+    background-color: #fff;
+    border: 2px solid black;
+    z-index: 1001;
+}
+
+.event-modal_small {
+    width: 350px;
+    height: 75px;
+    z-index: 1011;
+}
+
+.event-modal__time-wrapper {
+    display: block;
+    margin-top: 25px;
+}
+
+.event-modal__time-wrapper:after {
+    content: '';
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.event-modal__time {
+    display: block;
+    width: 80px;
+}
+
+.event-modal_title {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.event-modal__name {
+    display: block;
+    width: 100%;
+    margin-top: 25px;
+    box-sizing: border-box;
+}
+
+.event-modal__description {
+    display: block;
+    width: 100%;
+    margin-top: 25px;
+    box-sizing: border-box;
+    resize: none;
+}
+
+.event-modal__control-panel {
+    margin-top: 25px;
+}
+
+.event-modal_button {
+    margin-left: 15px;
+}
